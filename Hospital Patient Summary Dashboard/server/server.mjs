@@ -22,8 +22,8 @@ console.log("Mongo URI =", MONGODB_URI);
 const DB_NAME = 'central_server';
 
 // Gmail credentials — paste yours in .env or set as environment variables
-const EMAIL_ADDRESS = 'aadeshlawande22@gmail.com';
-const EMAIL_APP_PASSWORD = 'rmrsbjmyqbswlfav';
+const EMAIL_ADDRESS = 'your email id';
+const EMAIL_APP_PASSWORD = 'your password';
 
 // In-memory OTP store: { email: { otp, expires } }
 const otpStore = new Map();
