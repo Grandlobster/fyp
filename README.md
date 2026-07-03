@@ -1,106 +1,80 @@
-# KME
-# quantum_key_orchestrator
+<div align="center">
 
-**Key Management Control Plane** — generates, pools, and distributes quantum keys
-to an external Rust transport layer via gRPC.
+# 🔐 Quantum-Encrypted ABDM-Integrated Hospital Data Management System
+
+**Post-quantum cryptography · Simulated QKD · ABDM/ABHA interoperability**
+
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)
+![Rust](https://img.shields.io/badge/Rust-Transport_Layer-000000?style=flat-square&logo=rust&logoColor=white)
+![React](https://img.shields.io/badge/React-Next.js-20232A?style=flat-square&logo=react&logoColor=61DAFB)
+![MySQL](https://img.shields.io/badge/MySQL-Audit_Store-4479A1?style=flat-square&logo=mysql&logoColor=white)
+![ML--KEM](https://img.shields.io/badge/ML--KEM--768-FIPS_203-8A2BE2?style=flat-square)
+![ML--DSA](https://img.shields.io/badge/ML--DSA--65-FIPS_204-8A2BE2?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+
+</div>
 
 ---
 
-## System Components & Run Order
+## Table of Contents
 
-This project has three components that must be started **in this order**:
+- [About](#about)
+- [System Layers](#system-layers)
+- [Run Order](#run-order)
+- [Quick Start](#quick-start)
+  - [1. KME (Python)](#1-kme--quantum-key-orchestrator-start-first)
+  - [2. pqc_transport_node (Rust)](#2-pqc_transport_node-rust--start-second)
+  - [3. Frontend (React/Next.js)](#3-frontend--patient-summary-dashboard-start-last)
+- [End-to-End Data Flow](#end-to-end-data-flow)
+- [Project Structure](#project-structure)
+- [Module Reference](#module-reference)
+- [Diagrams](#diagrams)
+- [Academic Submission](#academic-submission)
+- [License](#license)
 
-1. **KME (Quantum Key Orchestrator)** — Python control plane. Must be running first, since the Rust transport layer connects to it via gRPC.
-2. **pqc_transport_node (Rust)** — Post-quantum secure transport layer (ML-KEM-768, ML-DSA-65). Connects to KME on startup.
-3. **Frontend (Patient Summary Dashboard)** — React/Next.js dashboard + Express.js server.
+---
 
-> ⚠️ Starting the Rust node or frontend before KME is up will cause connection failures — KME must always be started first.
-## About This Project
-
-**Secure and Distributed Hospital Data System with Quantum Encryption and ABHA**
+## About
 
 This project implements a quantum-encrypted, ABDM-integrated hospital data management system, combining post-quantum cryptography, simulated quantum key distribution, and India's Ayushman Bharat Digital Mission (ABDM) framework to enable secure, auditable transfer of clinical records between healthcare providers.
 
-The system is composed of four coordinated layers:
+The system is composed of four coordinated layers — QKD simulation, key management, PQC-secured transport, and an ABDM-integrated clinical dashboard — described below.
 
-### 1. QKD Simulation & Tiered Network (SeQUeNCe)
-The QKD protocol is prototyped using SeQUeNCe. Alice prepares qubits in random basis/bit combinations; Bob measures in a random basis. The sifted key and QBER (Quantum Bit Error Rate) are computed classically after basis reconciliation.
+## System Layers
 
-A three-tier network topology is modelled implementing **BB84**, **MDI-QKD**, and **Twin-Field QKD** protocols. The orchestrator additionally implements entanglement purification via nested Bennett-style pumping and a distributed ticking-qubit synchronisation handshake between quantum routers.
-
-### 2. Key Management Entity (ETSI GS QKD 014)
-A Flask-based KME exposes ETSI 014-compliant REST endpoints:
-- `GET /api/v1/keys/{slave_SAE_ID}/enc_keys`
-- `GET /api/v1/keys/{master_SAE_ID}/dec_keys`
-
-### 3. PQC Fallback (liboqs)
-The Open Quantum Safe (liboqs) library provides **ML-KEM (Kyber-1024)** for key encapsulation and **CRYSTALS-Dilithium** (randomised signing mode, Level 3 parameters) for digital signatures, used when live QKD hardware is unavailable.
-
-### 4. Secure Transport Layer — `pqc_transport_node` (Rust)
-Exposes a gRPC `SecureFileGateway` service. It implements **ML-KEM-768** for key encapsulation, derives a 256-bit session key via **HKDF-SHA256** over the concatenation of orchestrator-supplied key material and the ML-KEM shared secret, and signs all file-transfer segments using **ML-DSA-65** for cryptographic non-repudiation, conformant with **NIST FIPS 203/204**. Every IKE control-plane message is signed and verified, with results persisted to a MySQL audit store.
-
-### 5. Quantum Key Orchestrator (Python/gRPC)
-Supplies symmetric key material to the Rust transport node via a strongly-typed Protocol Buffers contract (`QuantumKeyService`). Implements a **Jain's Fairness Index** allocator for equitable key distribution across multiple transport nodes, with a QRNG fallback (QuantumBlockchains API, degrading further to CSPRNG) when QKD hardware is unavailable.
-
-### 6. ABDM Wrapper
-Deployed via Docker Compose alongside a Mock Gateway and MongoDB. Exposes simplified REST APIs for patient discovery, consent workflows, and care context management.
-
-### 7. Doctor Dashboard (React)
-Provides AI-generated patient summaries. Interface design follows the **ISO 26271:69** standard for medical document summarisation and draws on an HCI interface study, where the source document and AI summary are displayed side-by-side for clinician review.
+| # | Layer | Stack | Responsibility |
+|---|-------|-------|-----------------|
+| 1 | **QKD Simulation & Tiered Network** | SeQUeNCe | Three-tier network modelling **BB84**, **MDI-QKD**, **Twin-Field QKD**; nested Bennett-style entanglement purification; ticking-qubit sync handshake |
+| 2 | **Key Management Entity (KME)** | Flask, ETSI GS QKD 014 | REST endpoints for enc/dec key retrieval, conformant with the ETSI 014 spec |
+| 3 | **PQC Fallback** | liboqs | **ML-KEM (Kyber-1024)** key encapsulation + **CRYSTALS-Dilithium** (Level 3, randomised signing) when live QKD hardware is unavailable |
+| 4 | **Secure Transport Layer** | Rust, gRPC | `SecureFileGateway` service — **ML-KEM-768** encapsulation, **HKDF-SHA256** session key derivation, **ML-DSA-65** segment signing, FIPS 203/204 conformant |
+| 5 | **Quantum Key Orchestrator** | Python, gRPC | Supplies symmetric key material to the Rust node via a `QuantumKeyService` protobuf contract; Jain's Fairness Index allocation; QRNG → CSPRNG fallback chain |
+| 6 | **ABDM Wrapper** | Docker Compose, MongoDB | Patient discovery, consent workflows, care context management via a Mock Gateway |
+| 7 | **Doctor Dashboard** | React/Next.js | AI-generated patient summaries; side-by-side source/summary review per ISO 26271:69 |
 
 ---
 
-## End-to-End Data Flow
+## Run Order
 
-1. **Patient resolution** — The dashboard resolves an ABHA Address to a patient record through the ABDM Wrapper, which returns one or more CareContexts. Each CareContext carries hospital-specific routing metadata including a PACS endpoint, a KME endpoint reference, and a QKD node identifier. This metadata is forwarded verbatim by the application layer to the secure transport layer without independent processing or storage — in line with the system's separation-of-concerns design, which deliberately excludes cryptographic and key-management logic from the application tier.
+> ⚠️ **Components must be started in this exact order.** The Rust transport node connects to KME via gRPC on startup, and the frontend depends on the transport layer — starting anything out of order causes connection failures.
 
-2. **Secure file delivery (`pqc_transport_node`)** — On request, the transport node:
-   - Resolves the requested study to its underlying file representation
-   - Acquires symmetric key material from the Quantum Key Orchestrator's fairness-governed allocation pool
-   - Generates an ML-KEM-768 (FIPS 203) ephemeral key encapsulation
-   - Derives a 256-bit session key via HKDF-SHA256 over the orchestrator-supplied key material concatenated with the ML-KEM shared secret — a construction chosen so that compromise of either individual secret alone is insufficient to recover the session key
-   - Segments and encrypts the file under AES-256-GCM
-   - Signs each ciphertext segment with ML-DSA-65 (FIPS 204, CRYSTALS-Dilithium) for non-repudiation
-   - Persists control-plane signature verification outcomes to a MySQL audit store
-
-3. **Key orchestration (Python)** — Manages a fairness-governed symmetric key supply for one or more registered transport-layer routers. Allocation is governed by a Jain's Fairness Index-based max-min fair allocator with starvation recovery, ensuring equitable key distribution across routers under heterogeneous demand. The orchestrator models a QKD backbone via SeQUeNCe (BB84, MDI-QKD, TF-QKD topologies) with nested Bennett-style entanglement purification. Key supply is sourced through an ETSI GS QKD 014-conformant REST client capable of interfacing with a real KME; in the absence of live QKD hardware, the system degrades gracefully to a Quantum Blockchain QRNG fallback, with further fallback to a cryptographically-secure entropy source for resilience. Cross-component communication is mediated entirely through the `QuantumKeyService` Protocol Buffers contract.
+```
+① KME (Python)  →  ② pqc_transport_node (Rust)  →  ③ Frontend (React/Next.js + Express)
+```
 
 ---
----
 
+## Quick Start
 
-## Architecture
-uantum_key_orchestrator/
-├── etsi_client/
-│   ├── etsi_qkd_014_client.py   # Async ETSI GS QKD 014 REST client
-│   └── key_pool_manager.py      # Pre-fetched key pool with QRNG fallback
-├── sequence_backbone/
-│   └── backbone.py              # SeQUeNCe sim: BB84 · MDI · TF-QKD
-│                                # + Clifford ops, entanglement pumping,
-│                                #   nested pumping, ticking-qubit handshake
-├── fairness/
-│   └── jains_allocator.py       # Jain's Fairness Index · max-min allocation
-├── api/
-│   └── grpc_server.py           # gRPC control-plane (Rust transport interface)
-├── proto/
-│   └── key_service.proto        # Protobuf service definition
-├── orchestrator.py              # Top-level entry point
-├── requirements.txt
-└── tests/
-└── test_quantum_key_orchestrator.py
----
+### 1. KME — Quantum Key Orchestrator (start first)
 
-## Quick Start — KME (start this first)
-
-### 1. Install dependencies
-
+**Install dependencies**
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 2. Generate gRPC stubs
-
+**Generate gRPC stubs**
 ```bash
 python -m grpc_tools.protoc \
     -I proto \
@@ -109,29 +83,19 @@ python -m grpc_tools.protoc \
     proto/key_service.proto
 ```
 
-### 3. Set the QRNG API key
+**Set the QRNG API key**
 
-KME requires a QRNG API key for fallback key generation when the KME REST endpoint is unavailable. Set it as an environment variable before running:
+KME requires a QRNG API key for fallback key generation when the KME REST endpoint is unavailable.
 
-**Linux / macOS:**
-```bash
-export QRNG_API_KEY=your_api_key_here
-```
+| Shell | Command |
+|---|---|
+| Linux / macOS | `export QRNG_API_KEY=your_api_key_here` |
+| Windows (cmd) | `set QRNG_API_KEY=your_api_key_here` |
+| Windows (PowerShell) | `$env:QRNG_API_KEY="your_api_key_here"` |
 
-**Windows (cmd):**
-```cmd
-set QRNG_API_KEY=your_api_key_here
-```
+> If `QRNG_API_KEY` is unset, KME cannot fall back to QRNG when the REST endpoint is down. Keep the key in a local, gitignored `.env` file — never commit it.
 
-**Windows (PowerShell):**
-```powershell
-$env:QRNG_API_KEY="your_api_key_here"
-```
-
-> If `QRNG_API_KEY` is not set, KME will fail to fall back to QRNG when the KME REST endpoint is down. Get an API key from your QRNG provider and never commit it — keep it in a local `.env` file (already gitignored) or set it per-session as above.
-
-### 4. Run the orchestrator
-
+**Run the orchestrator**
 ```bash
 KME_BASE_URL=https://kme.example.com \
 SLAVE_SAE_ID=sae-bob-01 \
@@ -141,95 +105,30 @@ QRNG_FALLBACK=1 \
 python -m quantum_key_orchestrator.orchestrator
 ```
 
-### 5. Run tests
-
+**Run tests**
 ```bash
 pytest tests/ -v
 ```
 
 ---
 
-## Module reference
-
-### `etsi_client/etsi_qkd_014_client.py`
-Read about ETSI 
-`ETSIQKD014Client` — async HTTP/2 client implementing the three ETSI 014 endpoints:
-- `GET  /api/v1/keys/{slave_SAE_ID}/status`
-- `POST /api/v1/keys/{slave_SAE_ID}/enc_keys`
-- `POST /api/v1/keys/{slave_SAE_ID}/dec_keys`
-
-### `etsi_client/key_pool_manager.py`
-
-`ETSIKeyPoolManager` — in-memory deque-backed pool:
-- Background replenishment loop with exponential-backoff retry (tenacity)
-- QRNG fallback (`secrets.token_bytes`) when KME is unavailable
-- Prometheus metrics: `qko_key_pool_depth`, `qko_pool_replenish_seconds`
-- BellGenT `on_key_acquired` hook
-
-### `sequence_backbone/backbone.py`
-
-`QuantumBackbone` — SeQUeNCe simulation harness:
-- **BB84**: `pair_bb84_protocols` + `pair_cascade_protocols`
-- **MDI-QKD**: two BB84 half-links fused at the relay node
-- **TF-QKD**: twin-field phase-matched BB84 sessions XOR-combined post-measurement
-- `apply_clifford_sequence(qubit, gates)` — stabiliser-formalism gate application
-- `pump_entanglement(pairs)` — Bennett bilateral CNOT purification model
-- `nested_pump_entanglement(pairs, depth)` — Deutsch-Ekert hierarchical distillation
-- `TickingQubitHandshake` — distributed sync via H-prepared qubit + classical ACK
-
-### `fairness/jains_allocator.py`
-
-- `jains_fairness_index(allocations)` — pure function, O(n)
-- `weighted_jains_index(allocations, weights)` — weight-normalised JFI
-- `max_min_fair_allocate(demands, capacity, weights)` — water-filling algorithm
-- `KeyFairnessAllocator` — epoch-based allocator with starvation recovery,
-  Prometheus `qko_jains_fairness_index` gauge, BellGenT hook
-
-### `api/grpc_server.py`
-
-`QuantumKeyServicer` implementing:
-| RPC | Description |
-|-----|-------------|
-| `AcquireKeys` | Pop N JFI-governed keys, fire BellGenT hook |
-| `GetPoolStatus` | Pool depth + JFI per KME |
-| `RegisterRouter` / `DeregisterRouter` | Router lifecycle |
-| `SetRouterDemand` | Declare keys/epoch before allocation |
-| `StreamKeys` | Continuous key push to Rust transport (server-streaming) |
-
-### Diagrams
-
-<p float="left">
-  <img width="500" alt="Full DFD" src="https://github.com/user-attachments/assets/e39770eb-7b18-4901-8459-7acaef4c14cc" />
-  <img width="400" alt="Architecture Diagram" src="https://github.com/user-attachments/assets/9378e86a-8f3b-471c-b6d8-7ad0c3a5a047" />
-</p>
-<p float="left">
-  <img width="400" alt="Activity Diagram" src="https://github.com/user-attachments/assets/0e20e557-d2e8-486a-b1d3-2915d7ecde2a" />
-</p>
-
----
-
-## pqc_transport_node (Rust) — start this second
+### 2. pqc_transport_node (Rust) — start second
 
 Post-quantum secure transport layer implementing **ML-KEM-768** (key encapsulation) and **ML-DSA-65** (digital signatures), communicating with KME over gRPC.
 
-### 1. Install Rust
-
-Install via [rustup](https://rustup.rs/):
+**Install Rust** via [rustup](https://rustup.rs/):
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 Windows: download and run [rustup-init.exe](https://www.rust-lang.org/tools/install).
 
-### 2. Build
-
+**Build**
 ```bash
 cd pqc_transport_node
 cargo build --release
 ```
 
-### 3. Run
-
-Make sure KME is already running and reachable, then:
+**Run** — make sure KME is already running and reachable:
 ```bash
 cargo run --release
 ```
@@ -238,33 +137,133 @@ cargo run --release
 
 ---
 
-## Frontend — Patient Summary Dashboard (start this last)
+### 3. Frontend — Patient Summary Dashboard (start last)
 
 Backend (Express.js) and frontend (React/Next.js) run separately.
 
-### 1. Start the backend server
+**Start the backend server**
 ```bash
 cd PATIENT_SUMMARY_DASHBOARD/server
 npm install
 npm run dev
 ```
 
-### 2. Start the frontend
-From the root of `PATIENT_SUMMARY_DASHBOARD`:
+**Start the frontend** — from the root of `PATIENT_SUMMARY_DASHBOARD`:
 ```bash
 npm install
 npm run dev:frontend
 ```
 
-<p float="left">
-  <img width="367" alt="UI" src="https://github.com/user-attachments/assets/69f1d79f-3975-42fe-801c-005a00af0fe2" />
+<p align="center">
+  <img width="367" alt="Dashboard UI" src="https://github.com/user-attachments/assets/69f1d79f-3975-42fe-801c-005a00af0fe2" />
 </p>
 
 ---
 
-## License
+## End-to-End Data Flow
 
-This project is released under the [MIT License](LICENSE). See the `LICENSE` file for details. Third-party components (ABDM Wrapper, SeQUeNCe simulation framework, ETSI GS QKD 014 client) retain their original licenses — refer to their respective source repositories.
+**1. Patient resolution**
+The dashboard resolves an ABHA Address to a patient record through the ABDM Wrapper, which returns one or more CareContexts. Each CareContext carries hospital-specific routing metadata — a PACS endpoint, a KME endpoint reference, and a QKD node identifier — forwarded verbatim to the secure transport layer. The application tier deliberately excludes cryptographic and key-management logic, in line with the system's separation-of-concerns design.
+
+**2. Secure file delivery** (`pqc_transport_node`)
+- Resolves the requested study to its underlying file representation
+- Acquires symmetric key material from the orchestrator's fairness-governed allocation pool
+- Generates an ML-KEM-768 (FIPS 203) ephemeral key encapsulation
+- Derives a 256-bit session key via HKDF-SHA256 over the orchestrator-supplied key material concatenated with the ML-KEM shared secret — so that compromise of either individual secret alone is insufficient to recover the session key
+- Segments and encrypts the file under AES-256-GCM
+- Signs each ciphertext segment with ML-DSA-65 (FIPS 204 / CRYSTALS-Dilithium) for non-repudiation
+- Persists control-plane signature verification outcomes to a MySQL audit store
+
+**3. Key orchestration** (Python)
+- Manages a fairness-governed symmetric key supply for one or more registered transport-layer routers
+- Allocation via a Jain's Fairness Index max-min fair allocator with starvation recovery
+- Models a QKD backbone via SeQUeNCe (BB84, MDI-QKD, TF-QKD) with nested Bennett-style entanglement purification
+- Key supply sourced through an ETSI GS QKD 014-conformant REST client; degrades to Quantum Blockchain QRNG, then CSPRNG, when live QKD hardware is unavailable
+- All cross-component communication mediated through the `QuantumKeyService` protobuf contract
+
+---
+
+## Project Structure
+
+```
+quantum_key_orchestrator/
+├── etsi_client/
+│   ├── etsi_qkd_014_client.py   # Async ETSI GS QKD 014 REST client
+│   └── key_pool_manager.py      # Pre-fetched key pool with QRNG fallback
+├── sequence_backbone/
+│   └── backbone.py              # SeQUeNCe sim: BB84 · MDI · TF-QKD
+│                                 #   + Clifford ops, entanglement pumping,
+│                                 #   nested pumping, ticking-qubit handshake
+├── fairness/
+│   └── jains_allocator.py       # Jain's Fairness Index · max-min allocation
+├── api/
+│   └── grpc_server.py           # gRPC control-plane (Rust transport interface)
+├── proto/
+│   └── key_service.proto        # Protobuf service definition
+├── orchestrator.py              # Top-level entry point
+├── requirements.txt
+└── tests/
+    └── test_quantum_key_orchestrator.py
+```
+
+---
+
+## Module Reference
+
+### `etsi_client/etsi_qkd_014_client.py`
+`ETSIQKD014Client` — async HTTP/2 client implementing the ETSI 014 endpoints:
+
+| Method | Endpoint |
+|---|---|
+| `GET`  | `/api/v1/keys/{slave_SAE_ID}/status` |
+| `POST` | `/api/v1/keys/{slave_SAE_ID}/enc_keys` |
+| `POST` | `/api/v1/keys/{slave_SAE_ID}/dec_keys` |
+
+### `etsi_client/key_pool_manager.py`
+`ETSIKeyPoolManager` — in-memory deque-backed pool:
+- Background replenishment loop with exponential-backoff retry (`tenacity`)
+- QRNG fallback (`secrets.token_bytes`) when KME is unavailable
+- Prometheus metrics: `qko_key_pool_depth`, `qko_pool_replenish_seconds`
+- `on_key_acquired` BellGenT hook
+
+### `sequence_backbone/backbone.py`
+`QuantumBackbone` — SeQUeNCe simulation harness:
+- **BB84** — `pair_bb84_protocols` + `pair_cascade_protocols`
+- **MDI-QKD** — two BB84 half-links fused at the relay node
+- **TF-QKD** — twin-field phase-matched BB84 sessions, XOR-combined post-measurement
+- `apply_clifford_sequence(qubit, gates)` — stabiliser-formalism gate application
+- `pump_entanglement(pairs)` — Bennett bilateral CNOT purification model
+- `nested_pump_entanglement(pairs, depth)` — Deutsch-Ekert hierarchical distillation
+- `TickingQubitHandshake` — distributed sync via H-prepared qubit + classical ACK
+
+### `fairness/jains_allocator.py`
+- `jains_fairness_index(allocations)` — pure function, O(n)
+- `weighted_jains_index(allocations, weights)` — weight-normalised JFI
+- `max_min_fair_allocate(demands, capacity, weights)` — water-filling algorithm
+- `KeyFairnessAllocator` — epoch-based allocator with starvation recovery, Prometheus `qko_jains_fairness_index` gauge, BellGenT hook
+
+### `api/grpc_server.py`
+`QuantumKeyServicer` implements:
+
+| RPC | Description |
+|---|---|
+| `AcquireKeys` | Pop N JFI-governed keys, fire BellGenT hook |
+| `GetPoolStatus` | Pool depth + JFI per KME |
+| `RegisterRouter` / `DeregisterRouter` | Router lifecycle |
+| `SetRouterDemand` | Declare keys/epoch before allocation |
+| `StreamKeys` | Continuous key push to Rust transport (server-streaming) |
+
+---
+
+## Diagrams
+
+<p align="center">
+  <img width="500" alt="Full DFD" src="https://github.com/user-attachments/assets/e39770eb-7b18-4901-8459-7acaef4c14cc" />
+  <img width="400" alt="Architecture Diagram" src="https://github.com/user-attachments/assets/9378e86a-8f3b-471c-b6d8-7ad0c3a5a047" />
+</p>
+<p align="center">
+  <img width="400" alt="Activity Diagram" src="https://github.com/user-attachments/assets/0e20e557-d2e8-486a-b1d3-2915d7ecde2a" />
+</p>
 
 ---
 
@@ -273,14 +272,18 @@ This project is released under the [MIT License](LICENSE). See the `LICENSE` fil
 This project was submitted to **Savitribai Phule Pune University** in partial fulfillment for the award of the degree of **Bachelor of Engineering in Artificial Intelligence and Data Science**.
 
 **By:**
-- Aadesh Lawande — Roll No. B400530659
-- Kashyap Kamble — Roll No. B400530653
-- Saurabh Salunkhe — Roll No. B400530676
-- Stavan Shere — Roll No. B400530681
+- Aadesh Lawande — B400530659
+- Kashyap Kamble — B400530653
+- Saurabh Salunkhe — B400530676
+- Stavan Shere — B400530681
 
 **Under the guidance of:**
-Dr. Manju Pawar
-Department of Artificial Intelligence and Data Science
+Dr. Manju Pawar, Department of Artificial Intelligence and Data Science
 
-**Zeal Education Society's Zeal College of Engineering and Research**
-Narhe, Pune – 411041
+**Zeal Education Society's Zeal College of Engineering and Research**, Narhe, Pune – 411041
+
+---
+
+## License
+
+Released under the [MIT License](LICENSE). Third-party components (ABDM Wrapper, SeQUeNCe simulation framework, ETSI GS QKD 014 client) retain their original licenses — refer to their respective source repositories.
