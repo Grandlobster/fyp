@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🔐 Quantum-Encrypted ABDM-Integrated Hospital Data Management System
+#  Quantum-Encrypted ABDM-Integrated Hospital Data Management System
 
 **Post-quantum cryptography · Simulated QKD · ABDM/ABHA interoperability**
 
@@ -56,7 +56,7 @@ The system is composed of four coordinated layers — QKD simulation, key manage
 
 ## Run Order
 
-> ⚠️ **Components must be started in this exact order.** The Rust transport node connects to KME via gRPC on startup, and the frontend depends on the transport layer — starting anything out of order causes connection failures.
+>  **Components must be started in this exact order.** The Rust transport node connects to KME via gRPC on startup, and the frontend depends on the transport layer — starting anything out of order causes connection failures.
 
 ```
 ① KME (Python)  →  ② pqc_transport_node (Rust)  →  ③ Frontend (React/Next.js + Express)
@@ -281,6 +281,7 @@ This project was submitted to **Savitribai Phule Pune University** in partial fu
 Dr. Manju Pawar, Department of Artificial Intelligence and Data Science
 
 **Zeal Education Society's Zeal College of Engineering and Research**, Narhe, Pune – 411041
+<img width="600" height="300" alt="image" src="https://github.com/user-attachments/assets/5c293e30-4a99-4d84-b373-3495f5c2127b" />
 
 ---
 
