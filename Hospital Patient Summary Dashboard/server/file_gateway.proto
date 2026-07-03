@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package pqc.gateway.v1;
+
+// Inbound contract for the application layer (e.g. the ABDM-integrated
+// medical portal) to request a secure file transfer. This is the
+// previously-missing "door to knock on" — pqc_transport_node was, until
+// now, a gRPC CLIENT only (talking to the Quantum Key Orchestrator). This
+// service makes it also a gRPC SERVER for upstream application callers.
+service SecureFileGateway {
+  // Step 1: caller hands over ABDM-resolved CareContext metadata.
+  // This node acquires a key from the orchestrator, runs ML-KEM
+  // encapsulation, and prepares an encrypted transfer session.
+  rpc RequestSecureFile (SecureFileRequest) returns (SecureFileHandle);
+
+  // Step 2: caller streams the encrypted file using the handle from step 1.
+  rpc StreamEncryptedFile (FileChunkRequest) returns (stream FileChunk);
+}
+
+message SecureFileRequest {
+  string abha_address          = 1;
+  string care_context_reference = 2;
+  string study_uid             = 3;
+  string hospital_id           = 4;
+  string pacs_endpoint         = 5;
+  string kme_endpoint          = 6;
+  string qkd_node_id           = 7;
+}
+
+enum TransferStatus {
+  PENDING = 0;
+  READY   = 1;
+  FAILED  = 2;
+}
+
+message SecureFileHandle {
+  string transfer_id   = 1;
+  TransferStatus status = 2;
+  string detail        = 3; // human-readable status / error detail
+  bytes mlkem_public_key = 4;
+  string signer_key_id   = 5;
+  // The derived AES-256 session key for this transfer. Transmitted here
+  // because pqc_transport_node currently self-generates the ML-KEM
+  // keypair (see server.rs comment on RequestSecureFile) rather than the
+  // caller supplying its own — so the caller has no independent way to
+  // derive this key itself. This assumes the caller (the application
+  // backend) is trusted infrastructure, not an end-user browser. Do NOT
+  // forward this field to a browser/client; only the app backend should
+  // ever see it.
+  bytes session_key = 6;
+}
+
+message FileChunkRequest {
+  string transfer_id = 1;
+}
+
+message FileChunk {
+  bytes ciphertext   = 1; // AES-256-GCM ciphertext for this chunk
+  bytes nonce        = 2; // per-chunk nonce
+  uint32 sequence     = 3;
+  bool is_final       = 4;
+  bytes signature     = 5; // ML-DSA signature over (ciphertext || nonce || sequence)
+}

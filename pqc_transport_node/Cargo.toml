@@ -1,0 +1,65 @@
+[package]
+name = "pqc_transport_node"
+version = "0.1.0"
+edition = "2021"
+description = "PQC-enabled IKEv2 data-plane node with non-repudiation and external key-pool integration"
+license = "Apache-2.0"
+
+[[bin]]
+name = "pqc_transport_node"
+path = "src/main.rs"
+
+[dependencies]
+# --- Async runtime ---
+tokio = { version = "1.38", features = ["full"] }
+async-trait = "0.1"
+
+# --- ML-DSA (Dilithium) ---
+# Vendored via git since this is not published on crates.io.
+# Actual package name is `crystals-dilithium` (crate name: crystals_dilithium).
+crystals-dilithium = { git = "https://github.com/Quantum-Blockchains/dilithium", branch = "main" }
+
+# --- ML-KEM (Kyber) ---
+# pqcrypto-mlkem implements the FIPS 203 standardized ML-KEM (formerly Kyber).
+pqcrypto-mlkem = "0.1"
+pqcrypto-traits = "0.3"
+
+# --- gRPC client to external Key Management Orchestrator, and gRPC
+# server for the inbound application-layer file gateway ---
+tonic = "0.11"
+prost = "0.12"
+tokio-stream = "0.1"
+
+# --- Database (session state logging only — MySQL or MongoDB, no SQLite) ---
+sqlx = { version = "0.7", features = ["mysql", "runtime-tokio-rustls", "chrono", "uuid"] }
+mongodb = { version = "2.8", optional = true }
+
+# --- Wire formats / packet parsing ---
+byteorder = "1.5"
+bytes = "1.6"
+
+# --- Symmetric encryption for the file gateway data plane ---
+aes-gcm = "0.10"
+hkdf = "0.12"
+sha3 = "0.10"
+sha2 = "0.10"
+rand_core = "0.6"
+rand = "0.8"
+zeroize = { version = "1.7", features = ["derive"] }
+
+# --- Errors / logging ---
+thiserror = "1.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+uuid = { version = "1.8", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+
+[build-dependencies]
+tonic-build = "0.11"
+
+[features]
+default = ["mysql-backend"]
+mysql-backend = []
+mongo-backend = ["mongodb"]

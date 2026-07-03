@@ -1,0 +1,193 @@
+     ___      .______    _______  .___  ___.      ____    __    ____ .______          ___      .______   .______    _______ .______
+    /   \     |   _  \  |       \ |   \/   |      \   \  /  \  /   / |   _  \        /   \     |   _  \  |   _  \  |   ____||   _  \
+   /  ^  \    |  |_)  | |  .--.  ||  \  /  |  _____\   \/    \/   /  |  |_)  |      /  ^  \    |  |_)  | |  |_)  | |  |__   |  |_)  |
+  /  /_\  \   |   _  <  |  |  |  ||  |\/|  | |______\            /   |      /      /  /_\  \   |   ___/  |   ___/  |   __|  |      /
+ /  _____  \  |  |_)  | |  '--'  ||  |  |  |         \    /\    /    |  |\  \----./  _____  \  |  |      |  |      |  |____ |  |\  \----.
+/__/     \__\ |______/  |_______/ |__|  |__|          \__/  \__/     | _| `._____/__/     \__\ | _|      | _|      |_______|| _| `._____|
+
+2026-06-23T14:55:14.104Z  INFO 7 --- [           main] i.n.abdm.wrapper.ABDMWrapperApplication  : Starting ABDMWrapperApplication v1.0-SNAPSHOT using Java 17.0.6 with PID 7 (/app/build/libs/ABDM-wrapper-1.0-SNAPSHOT.jar started by root in /app)
+2026-06-23T14:55:14.130Z DEBUG 7 --- [           main] i.n.abdm.wrapper.ABDMWrapperApplication  : Running with Spring Boot v3.2.0, Spring v6.1.1
+2026-06-23T14:55:14.135Z  INFO 7 --- [           main] i.n.abdm.wrapper.ABDMWrapperApplication  : The following 1 profile is active: "v3"
+2026-06-23T14:55:16.811Z  INFO 7 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2026-06-23T14:55:17.070Z  INFO 7 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 247 ms. Found 3 MongoDB repository interfaces.
+2026-06-23T14:55:17.896Z  INFO 7 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8082 (http)
+2026-06-23T14:55:17.918Z  INFO 7 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-23T14:55:17.918Z  INFO 7 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2026-06-23T14:55:18.004Z  INFO 7 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-06-23T14:55:18.009Z  INFO 7 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3542 ms
+2026-06-23T14:55:18.138Z DEBUG 7 --- [           main] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2026-06-23T14:55:18.606Z  INFO 7 --- [           main] org.mongodb.driver.client                : MongoClient with metadata {"driver": {"name": "mongo-java-driver|sync|spring-boot", "version": "4.11.1"}, "os": {"type": "Linux", "name": "Linux", "architecture": "amd64", "version": "6.18.33.1-microsoft-standard-WSL2"}, "platform": "Java/Eclipse Adoptium/17.0.6+10"} created with settings MongoClientSettings{readPreference=primary, writeConcern=WriteConcern{w=null, wTimeout=null ms, journal=null}, retryWrites=true, retryReads=true, readConcern=ReadConcern{level=null}, credential=null, transportSettings=null, streamFactoryFactory=null, commandListeners=[], codecRegistry=ProvidersCodecRegistry{codecProviders=[ValueCodecProvider{}, BsonValueCodecProvider{}, DBRefCodecProvider{}, DBObjectCodecProvider{}, DocumentCodecProvider{}, CollectionCodecProvider{}, IterableCodecProvider{}, MapCodecProvider{}, GeoJsonCodecProvider{}, GridFSFileCodecProvider{}, Jsr310CodecProvider{}, JsonObjectCodecProvider{}, BsonCodecProvider{}, EnumCodecProvider{}, com.mongodb.client.model.mql.ExpressionCodecProvider@7558633, com.mongodb.Jep395RecordCodecProvider@5657967b, com.mongodb.KotlinCodecProvider@61394494]}, loggerSettings=LoggerSettings{maxDocumentLength=1000}, clusterSettings={hosts=[mongodb:27017], srvServiceName=mongodb, mode=SINGLE, requiredClusterType=UNKNOWN, requiredReplicaSetName='null', serverSelector='null', clusterListeners='[]', serverSelectionTimeout='30000 ms', localThreshold='15 ms'}, socketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=0, receiveBufferSize=0, proxySettings=ProxySettings{host=null, port=null, username=null, password=null}}, heartbeatSocketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=10000, receiveBufferSize=0, proxySettings=ProxySettings{host=null, port=null, username=null, password=null}}, connectionPoolSettings=ConnectionPoolSettings{maxSize=100, minSize=0, maxWaitTimeMS=120000, maxConnectionLifeTimeMS=0, maxConnectionIdleTimeMS=0, maintenanceInitialDelayMS=0, maintenanceFrequencyMS=60000, connectionPoolListeners=[], maxConnecting=2}, serverSettings=ServerSettings{heartbeatFrequencyMS=10000, minHeartbeatFrequencyMS=500, serverListeners='[]', serverMonitorListeners='[]'}, sslSettings=SslSettings{enabled=false, invalidHostNameAllowed=false, context=null}, applicationName='null', compressorList=[], uuidRepresentation=JAVA_LEGACY, serverApi=null, autoEncryptionSettings=null, dnsClient=null, inetAddressResolver=null, contextProvider=null}
+2026-06-23T14:55:18.739Z  INFO 7 --- [}-mongodb:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=mongodb:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=27, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=82854905}
+2026-06-23T14:55:20.236Z DEBUG 7 --- [           main] o.s.w.r.f.client.ExchangeFunctions       : [595ec862] HTTP POST http://gateway:8090/v0.5/sessions
+2026-06-23T14:55:20.874Z TRACE 7 --- [or-http-epoll-2] org.springframework.web.HttpLogging      : [595ec862] Encoding [CreateSessionRequest(clientId=, clientSecret=, grantType=client_credentials)]
+2026-06-23T14:55:21.297Z DEBUG 7 --- [or-http-epoll-2] o.s.w.r.f.client.ExchangeFunctions       : [595ec862] [9698ceb1-1] Response 200 OK
+2026-06-23T14:55:21.382Z TRACE 7 --- [or-http-epoll-2] org.springframework.web.HttpLogging      : [595ec862] [9698ceb1-1] Decoded [{"accessToken":"random-access-token","expiresIn":null,"refreshExpiresIn":null,"refreshToken":null,"tokenType":null}]
+2026-06-23T14:55:22.662Z DEBUG 7 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 38 mappings in 'requestMappingHandlerMapping'
+2026-06-23T14:55:22.739Z DEBUG 7 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2026-06-23T14:55:22.789Z DEBUG 7 --- [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-06-23T14:55:22.856Z DEBUG 7 --- [           main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-06-23T14:55:23.052Z  INFO 7 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8082 (http) with context path ''
+2026-06-23T14:55:23.105Z  INFO 7 --- [           main] i.n.abdm.wrapper.ABDMWrapperApplication  : Started ABDMWrapperApplication in 10.362 seconds (process running for 12.677)
+2026-06-23T15:10:23.278Z DEBUG 7 --- [   scheduling-2] o.s.w.r.f.client.ExchangeFunctions       : [594bad9a] HTTP POST http://gateway:8090/v0.5/sessions
+2026-06-23T15:10:23.381Z TRACE 7 --- [or-http-epoll-3] org.springframework.web.HttpLogging      : [594bad9a] Encoding [CreateSessionRequest(clientId=, clientSecret=, grantType=client_credentials)]
+2026-06-23T15:10:23.715Z DEBUG 7 --- [or-http-epoll-3] o.s.w.r.f.client.ExchangeFunctions       : [594bad9a] [b1578285-1] Response 200 OK
+2026-06-23T15:10:23.736Z TRACE 7 --- [or-http-epoll-3] org.springframework.web.HttpLogging      : [594bad9a] [b1578285-1] Decoded [{"accessToken":"random-access-token","expiresIn":null,"refreshExpiresIn":null,"refreshToken":null,"tokenType":null}]
+2026-06-23T15:25:23.027Z DEBUG 7 --- [   scheduling-3] o.s.w.r.f.client.ExchangeFunctions       : [25f2b57] HTTP POST http://gateway:8090/v0.5/sessions
+2026-06-23T15:25:23.262Z TRACE 7 --- [or-http-epoll-4] org.springframework.web.HttpLogging      : [25f2b57] Encoding [CreateSessionRequest(clientId=, clientSecret=, grantType=client_credentials)]
+2026-06-23T15:25:23.641Z DEBUG 7 --- [or-http-epoll-4] o.s.w.r.f.client.ExchangeFunctions       : [25f2b57] [a754c0cf-1] Response 200 OK
+2026-06-23T15:25:23.658Z TRACE 7 --- [or-http-epoll-4] org.springframework.web.HttpLogging      : [25f2b57] [a754c0cf-1] Decoded [{"accessToken":"random-access-token","expiresIn":null,"refreshExpiresIn":null,"refreshToken":null,"tokenType":null}]
+2026-06-23T15:40:22.932Z DEBUG 7 --- [   scheduling-2] o.s.w.r.f.client.ExchangeFunctions       : [54f51582] HTTP POST http://gateway:8090/v0.5/sessions
+2026-06-23T15:40:23.077Z TRACE 7 --- [or-http-epoll-5] org.springframework.web.HttpLogging      : [54f51582] Encoding [CreateSessionRequest(clientId=, clientSecret=, grantType=client_credentials)]
+2026-06-23T15:40:23.331Z DEBUG 7 --- [or-http-epoll-5] o.s.w.r.f.client.ExchangeFunctions       : [54f51582] [f067fa06-1] Response 200 OK
+2026-06-23T15:40:23.363Z TRACE 7 --- [or-http-epoll-5] org.springframework.web.HttpLogging      : [54f51582] [f067fa06-1] Decoded [{"accessToken":"random-access-token","expiresIn":null,"refreshExpiresIn":null,"refreshToken":null,"tokenType":null}]
+2026-06-23T15:55:22.899Z DEBUG 7 --- [   scheduling-1] o.s.w.r.f.client.ExchangeFunctions       : [34000c46] HTTP POST http://gateway:8090/v0.5/sessions
+2026-06-23T15:55:23.116Z TRACE 7 --- [or-http-epoll-6] org.springframework.web.HttpLogging      : [34000c46] Encoding [CreateSessionRequest(clientId=, clientSecret=, grantType=client_credentials)]
+2026-06-23T15:55:23.439Z DEBUG 7 --- [or-http-epoll-6] o.s.w.r.f.client.ExchangeFunctions       : [34000c46] [4e187776-1] Response 200 OK
+2026-06-23T15:55:23.460Z TRACE 7 --- [or-http-epoll-6] org.springframework.web.HttpLogging      : [34000c46] [4e187776-1] Decoded [{"accessToken":"random-access-token","expiresIn":null,"refreshExpiresIn":null,"refreshToken":null,"tokenType":null}]
+2026-06-23T15:58:35.005Z  INFO 7 --- [nio-8082-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-23T15:58:35.014Z  INFO 7 --- [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-23T15:58:35.089Z DEBUG 7 --- [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2026-06-23T15:58:35.093Z DEBUG 7 --- [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2026-06-23T15:58:35.096Z DEBUG 7 --- [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2026-06-23T15:58:35.674Z DEBUG 7 --- [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@59a3eaf7
+2026-06-23T15:58:35.685Z DEBUG 7 --- [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@71469e01
+2026-06-23T15:58:35.732Z DEBUG 7 --- [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2026-06-23T15:58:35.747Z  INFO 7 --- [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 718 ms
+2026-06-23T15:58:36.202Z DEBUG 7 --- [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/v3/patient/test", parameters={}
+2026-06-23T15:58:36.424Z DEBUG 7 --- [nio-8082-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to in.nha.abdm.wrapper.v3.patient.PatientV3Controller#getPatientDetails(String, String)
+2026-06-23T15:58:36.433Z  INFO 7 --- [nio-8082-exec-1] i.n.a.w.v3.common.logger.HeaderLogger    : [X-HIP-ID: null, X-HIU-ID: null, REQUEST-ID: null]
+2026-06-23T15:58:37.632Z DEBUG 7 --- [nio-8082-exec-1] o.s.web.method.HandlerMethod             : Could not resolve parameter [1] in public org.springframework.http.ResponseEntity<java.lang.Object> in.nha.abdm.wrapper.v3.patient.PatientV3Controller.getPatientDetails(java.lang.String,java.lang.String): Required request parameter 'hipId' for method parameter type String is not present
+2026-06-23T15:58:37.688Z DEBUG 7 --- [nio-8082-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Using @ExceptionHandler in.nha.abdm.wrapper.v3.common.exceptions.GlobalExceptionHandler#handleMissingParams(MissingServletRequestParameterException)
+2026-06-23T15:58:38.083Z DEBUG 7 --- [nio-8082-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8] and supported [application/json, application/*+json]
+2026-06-23T15:58:38.126Z TRACE 7 --- [nio-8082-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [FacadeV3Response(clientRequestId=null, httpStatusCode=400 BAD_REQUEST, message=null, errors=[ErrorV3Response(error=ErrorResponse(code=Wrapper-1001, message=The required parameter 'hipId' is missing))])]
+2026-06-23T15:58:38.511Z DEBUG 7 --- [nio-8082-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required request parameter 'hipId' for method parameter type String is not present]
+2026-06-23T15:58:38.512Z DEBUG 7 --- [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 400 BAD_REQUEST
+2026-06-23T16:01:42.162Z DEBUG 7 --- [nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : PUT "/v3/add-patients", parameters={}
+2026-06-23T16:01:42.180Z DEBUG 7 --- [nio-8082-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to in.nha.abdm.wrapper.v3.hip.facade.link.HIPFacadeLinkV3Controller#addPatients(List)
+2026-06-23T16:01:42.184Z  INFO 7 --- [nio-8082-exec-2] i.n.a.w.v3.common.logger.HeaderLogger    : [X-HIP-ID: null, X-HIU-ID: null, REQUEST-ID: null]
+2026-06-23T16:01:42.792Z TRACE 7 --- [nio-8082-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [[Patient(abhaAddress=test@abdm, name=Payal Lawande, gender=F, dateOfBirth=2000-01-01, patientReference=test, patientDisplay=Payal Lawande, patientMobile=9999999999, careContexts=[CareContext(referenceNumber=CT-001, display=Chest CT, hiType=DiagnosticReport, studyUID=1.2.840.113619.001, seriesUID=1.2.840.113619.001.1, modality=CT, hospitalId=hospital-a, hospitalName=ABC Hospital, pacsEndpoint=http://localhost:8042, kmeEndpoint=http://localhost:9000, qkdNodeId=PUNE_NODE, ipsecGateway=10.0.0.10, sha256Hash=abc123456789, isLinked=false)], consents=null, hipId=my-hip)]]
+2026-06-23T16:01:44.400Z DEBUG 7 --- [nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : Failed to complete request: org.bson.codecs.configuration.CodecConfigurationException: Can't find a codec for CodecCacheKey{clazz=class in.nha.abdm.wrapper.v1.common.models.CareContext, types=null}.
+2026-06-23T16:01:44.408Z ERROR 7 --- [nio-8082-exec-2] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.bson.codecs.configuration.CodecConfigurationException: Can't find a codec for CodecCacheKey{clazz=class in.nha.abdm.wrapper.v1.common.models.CareContext, types=null}.] with root cause
+
+org.bson.codecs.configuration.CodecConfigurationException: Can't find a codec for CodecCacheKey{clazz=class in.nha.abdm.wrapper.v1.common.models.CareContext, types=null}.
+	at org.bson.internal.ProvidersCodecRegistry.lambda$get$0(ProvidersCodecRegistry.java:87) ~[bson-4.11.1.jar!/:na]
+	at java.base/java.util.Optional.orElseGet(Optional.java:364) ~[na:na]
+	at org.bson.internal.ProvidersCodecRegistry.get(ProvidersCodecRegistry.java:80) ~[bson-4.11.1.jar!/:na]
+	at org.bson.internal.ChildCodecRegistry.get(ChildCodecRegistry.java:68) ~[bson-4.11.1.jar!/:na]
+	at org.bson.codecs.CollectionCodec.writeValue(CollectionCodec.java:92) ~[bson-4.11.1.jar!/:na]
+	at org.bson.codecs.AbstractCollectionCodec.encode(AbstractCollectionCodec.java:111) ~[bson-4.11.1.jar!/:na]
+	at org.bson.codecs.AbstractCollectionCodec.encode(AbstractCollectionCodec.java:42) ~[bson-4.11.1.jar!/:na]
+	at org.bson.codecs.EncoderContext.encodeWithChildContext(EncoderContext.java:91) ~[bson-4.11.1.jar!/:na]
+	at org.bson.codecs.DocumentCodec.writeValue(DocumentCodec.java:206) ~[bson-4.11.1.jar!/:na]
+	at org.bson.codecs.DocumentCodec.encode(DocumentCodec.java:164) ~[bson-4.11.1.jar!/:na]
+	at org.bson.codecs.DocumentCodec.encode(DocumentCodec.java:44) ~[bson-4.11.1.jar!/:na]
+	at org.bson.internal.LazyCodec.encode(LazyCodec.java:43) ~[bson-4.11.1.jar!/:na]
+	at org.bson.codecs.EncoderContext.encodeWithChildContext(EncoderContext.java:91) ~[bson-4.11.1.jar!/:na]
+	at org.bson.codecs.DocumentCodec.writeValue(DocumentCodec.java:206) ~[bson-4.11.1.jar!/:na]
+	at org.bson.codecs.DocumentCodec.encode(DocumentCodec.java:164) ~[bson-4.11.1.jar!/:na]
+	at org.bson.codecs.DocumentCodec.encode(DocumentCodec.java:44) ~[bson-4.11.1.jar!/:na]
+	at org.bson.internal.LazyCodec.encode(LazyCodec.java:43) ~[bson-4.11.1.jar!/:na]
+	at org.bson.codecs.EncoderContext.encodeWithChildContext(EncoderContext.java:91) ~[bson-4.11.1.jar!/:na]
+	at org.bson.codecs.DocumentCodec.writeValue(DocumentCodec.java:206) ~[bson-4.11.1.jar!/:na]
+	at org.bson.codecs.DocumentCodec.encode(DocumentCodec.java:164) ~[bson-4.11.1.jar!/:na]
+	at org.bson.codecs.DocumentCodec.encode(DocumentCodec.java:44) ~[bson-4.11.1.jar!/:na]
+	at org.bson.codecs.BsonDocumentWrapperCodec.encode(BsonDocumentWrapperCodec.java:63) ~[bson-4.11.1.jar!/:na]
+	at org.bson.codecs.BsonDocumentWrapperCodec.encode(BsonDocumentWrapperCodec.java:29) ~[bson-4.11.1.jar!/:na]
+	at com.mongodb.internal.connection.SplittablePayload$WriteRequestEncoder.encode(SplittablePayload.java:216) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.connection.SplittablePayload$WriteRequestEncoder.encode(SplittablePayload.java:182) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at org.bson.codecs.BsonDocumentWrapperCodec.encode(BsonDocumentWrapperCodec.java:63) ~[bson-4.11.1.jar!/:na]
+	at org.bson.codecs.BsonDocumentWrapperCodec.encode(BsonDocumentWrapperCodec.java:29) ~[bson-4.11.1.jar!/:na]
+	at com.mongodb.internal.connection.BsonWriterHelper.writeDocument(BsonWriterHelper.java:77) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.connection.BsonWriterHelper.writePayload(BsonWriterHelper.java:59) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.connection.CommandMessage.encodeMessageBodyWithMetadata(CommandMessage.java:162) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.connection.RequestMessage.encode(RequestMessage.java:136) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.connection.CommandMessage.encode(CommandMessage.java:59) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.sendAndReceive(InternalStreamConnection.java:360) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.connection.UsageTrackingInternalConnection.sendAndReceive(UsageTrackingInternalConnection.java:114) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.connection.DefaultConnectionPool$PooledConnection.sendAndReceive(DefaultConnectionPool.java:765) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.connection.CommandProtocolImpl.execute(CommandProtocolImpl.java:76) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.connection.DefaultServer$DefaultServerProtocolExecutor.execute(DefaultServer.java:209) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.connection.DefaultServerConnection.executeProtocol(DefaultServerConnection.java:115) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.connection.DefaultServerConnection.command(DefaultServerConnection.java:83) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.connection.DefaultServer$OperationCountTrackingConnection.command(DefaultServer.java:307) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeCommand(MixedBulkWriteOperation.java:395) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.executeBulkWriteBatch(MixedBulkWriteOperation.java:259) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.lambda$execute$2(MixedBulkWriteOperation.java:203) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.operation.SyncOperationHelper.lambda$withSourceAndConnection$0(SyncOperationHelper.java:127) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.operation.SyncOperationHelper.withSuppliedResource(SyncOperationHelper.java:152) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.operation.SyncOperationHelper.lambda$withSourceAndConnection$1(SyncOperationHelper.java:126) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.operation.SyncOperationHelper.withSuppliedResource(SyncOperationHelper.java:152) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.operation.SyncOperationHelper.withSourceAndConnection(SyncOperationHelper.java:125) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.lambda$execute$3(MixedBulkWriteOperation.java:188) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.lambda$decorateWriteWithRetries$0(MixedBulkWriteOperation.java:146) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.async.function.RetryingSyncSupplier.get(RetryingSyncSupplier.java:67) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:207) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.internal.operation.MixedBulkWriteOperation.execute(MixedBulkWriteOperation.java:77) ~[mongodb-driver-core-4.11.1.jar!/:na]
+	at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:173) ~[mongodb-driver-sync-4.11.1.jar!/:na]
+	at com.mongodb.client.internal.MongoCollectionImpl.executeBulkWrite(MongoCollectionImpl.java:450) ~[mongodb-driver-sync-4.11.1.jar!/:na]
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:431) ~[mongodb-driver-sync-4.11.1.jar!/:na]
+	at com.mongodb.client.internal.MongoCollectionImpl.bulkWrite(MongoCollectionImpl.java:426) ~[mongodb-driver-sync-4.11.1.jar!/:na]
+	at in.nha.abdm.wrapper.v3.database.mongo.services.PatientV3Service.upsertPatients(PatientV3Service.java:367) ~[!/:1.0-SNAPSHOT]
+	at in.nha.abdm.wrapper.v3.hip.hrp.WorkflowV3Manager.addPatients(WorkflowV3Manager.java:124) ~[!/:1.0-SNAPSHOT]
+	at in.nha.abdm.wrapper.v3.hip.facade.link.HIPFacadeLinkV3Controller.addPatients(HIPFacadeLinkV3Controller.java:77) ~[!/:1.0-SNAPSHOT]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:254) ~[spring-web-6.1.1.jar!/:6.1.1]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:182) ~[spring-web-6.1.1.jar!/:6.1.1]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.1.1.jar!/:6.1.1]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:917) ~[spring-webmvc-6.1.1.jar!/:6.1.1]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:829) ~[spring-webmvc-6.1.1.jar!/:6.1.1]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.1.1.jar!/:6.1.1]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.1.jar!/:6.1.1]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.1.jar!/:6.1.1]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.1.jar!/:6.1.1]
+	at org.springframework.web.servlet.FrameworkServlet.doPut(FrameworkServlet.java:925) ~[spring-webmvc-6.1.1.jar!/:6.1.1]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:593) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.1.1.jar!/:6.1.1]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:205) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.16.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-6.1.1.jar!/:6.1.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.1.jar!/:6.1.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.1.1.jar!/:6.1.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.1.jar!/:6.1.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.1.jar!/:6.1.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.1.jar!/:6.1.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.1.jar!/:6.1.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.1.jar!/:6.1.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+
+2026-06-23T16:01:44.498Z DEBUG 7 --- [nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for PUT "/error", parameters={}
+2026-06-23T16:01:44.508Z DEBUG 7 --- [nio-8082-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2026-06-23T16:01:44.509Z  INFO 7 --- [nio-8082-exec-2] i.n.a.w.v3.common.logger.HeaderLogger    : [X-HIP-ID: null, X-HIU-ID: null, REQUEST-ID: null]
+2026-06-23T16:01:44.563Z DEBUG 7 --- [nio-8082-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-06-23T16:01:44.580Z TRACE 7 --- [nio-8082-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Tue Jun 23 16:01:44 UTC 2026, status=500, error=Internal Server Error, path=/v3/add-patients}]
+2026-06-23T16:01:44.690Z DEBUG 7 --- [nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 500

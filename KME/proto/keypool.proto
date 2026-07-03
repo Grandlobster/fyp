@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package keypool;
+
+// Service exposed by the external Key Management Orchestrator.
+// This node is a CONSUMER ONLY — it never generates quantum keys itself.
+service KeyPoolOrchestrator {
+  // Fetch a symmetric key by logical key ID (e.g. derived from an IKE_SA SPI pair).
+  rpc FetchSymmetricKey (FetchKeyRequest) returns (FetchKeyResponse);
+
+  // Request a fresh key bound to a session, e.g. post IKE_AUTH or rekey.
+  rpc ProvisionSessionKey (ProvisionKeyRequest) returns (FetchKeyResponse);
+
+  // Mark a key as consumed/expired so the orchestrator can rotate it.
+  rpc RevokeKey (RevokeKeyRequest) returns (RevokeKeyResponse);
+}
+
+message FetchKeyRequest {
+  string key_id = 1;
+  string requesting_node_id = 2;
+}
+
+message ProvisionKeyRequest {
+  string session_id = 1;
+  string requesting_node_id = 2;
+  uint32 key_length_bytes = 3;
+}
+
+message FetchKeyResponse {
+  string key_id = 1;
+  bytes key_material = 2;       // symmetric key bytes, handle with zeroize on the client
+  int64 expires_at_unix = 3;
+  string algorithm_hint = 4;    // e.g. "AES-256-GCM", "ChaCha20-Poly1305"
+}
+
+message RevokeKeyRequest {
+  string key_id = 1;
+  string reason = 2;
+}
+
+message RevokeKeyResponse {
+  bool revoked = 1;
+}

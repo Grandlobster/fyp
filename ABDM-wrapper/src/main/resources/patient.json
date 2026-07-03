@@ -1,0 +1,14 @@
+[
+  {
+    "abhaAddress": "test@abdm",
+    "name": "Payal Lawande",
+    "gender": "F",
+    "dateOfBirth": "2000-01-01",
+    "patientReference": "test",
+    "patientDisplay": "Payal Lawande",
+    "patientMobile": "9999999999",
+    "hipId": "my-hip",
+    "careContexts": [],
+    "consents": []
+  }
+]

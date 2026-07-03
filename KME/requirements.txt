@@ -1,0 +1,36 @@
+# ── Quantum Network Simulation ────────────────────────────────────────────────
+sequence==0.8.5            # SeQUeNCe discrete-event QKD simulator
+# sequence pulls in: numpy, scipy, json5, tqdm, pandas
+
+# ── ETSI GS QKD 014 ───────────────────────────────────────────────────────────
+# No PyPI package exists for a production ETSI 014 client; we ship our own
+# thin HTTP(S) wrapper (etsi_client/etsi_qkd_014_client.py) that speaks the
+# ETSI REST schema. The only runtime dep is:
+httpx[http2]>=0.27.0             # async HTTP/2 client for ETSI KME endpoints
+cryptography>=42.0.0             # key-material handling, AES-GCM wrap/unwrap
+
+# ── QRNG fallback ─────────────────────────────────────────────────────────────
+# Quantis QRNG REST / ANU QRNG public API accessed via httpx (already above)
+
+# ── BellGenT integration ──────────────────────────────────────────────────────
+# BellGenT has no published PyPI release; we integrate via its REST/gRPC stubs.
+# The generated stubs are committed under proto/; runtime deps:
+grpcio>=1.63.0
+grpcio-tools>=1.63.0
+protobuf>=5.26.0
+
+# ── gRPC server (exposes keys to Rust transport layer) ────────────────────────
+# (same grpcio/protobuf above)
+
+# ── Async runtime & utilities ─────────────────────────────────────────────────
+anyio>=4.3.0
+structlog>=24.1.0                # structured JSON logging
+pydantic>=2.7.0                  # config validation / key schemas
+tenacity>=8.3.0                  # retry logic for KME / QRNG calls
+prometheus-client>=0.20.0        # metrics: pool depth, fairness index, latency
+
+# ── Dev / test ────────────────────────────────────────────────────────────────
+pytest>=8.2.0
+pytest-asyncio>=0.23.0
+pytest-mock>=3.14.0
+hypothesis>=6.100.0

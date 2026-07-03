@@ -1,0 +1,88 @@
+[
+  {
+    "abhaAddress": "123456789",
+    "name": "Payal Lawande",
+    "gender": "F",
+    "dateOfBirth": "2000-01-01",
+    "patientReference": "test",
+    "patientDisplay": "Payal Lawande",
+    "patientMobile": "9999999999",
+    "email": "infinityastroclub@gmail.com",
+    "hipId": "my-hip",
+
+    "careContexts": [
+      {
+        "referenceNumber": "CT-001",
+        "display": "Chest CT",
+
+        "hiType": "DiagnosticReport",
+
+        "studyUID": "1.2.840.113619.001",
+        "seriesUID": "1.2.840.113619.001.1",
+
+        "modality": "CT",
+
+        "hospitalId": "hospital-a",
+        "hospitalName": "ABC Hospital",
+
+        "pacsEndpoint": "http://localhost:8042",
+
+        "kmeEndpoint": "http://localhost:9000",
+
+        "qkdNodeId": "PUNE_NODE",
+
+        "ipsecGateway": "10.0.0.10",
+
+        "sha256Hash": "abc123456789"
+      },
+      {
+        "referenceNumber": "REF-2024-DS-007",
+        "display": "Discharge Summary",
+
+        "hiType": "DischargeSummary",
+
+        "studyUID": "record-002",
+        "seriesUID": "record-002.1",
+
+        "modality": "PDF",
+
+        "hospitalId": "hospital-a",
+        "hospitalName": "Mai Mangeshkar Hospital",
+
+        "pacsEndpoint": "http://localhost:8042",
+
+        "kmeEndpoint": "http://localhost:9000",
+
+        "qkdNodeId": "PUNE_NODE",
+
+        "ipsecGateway": "10.0.0.10",
+
+        "sha256Hash": "def456789abc"
+      },
+      {
+        "referenceNumber": "REF-2024-OR-003",
+        "display": "Operative Video",
+
+        "hiType": "Procedure",
+
+        "studyUID": "video-001",
+        "seriesUID": "video-001.1",
+
+        "modality": "VIDEO",
+
+        "hospitalId": "hospital-a",
+        "hospitalName": "Ruby Hall Hospital",
+
+        "pacsEndpoint": "http://localhost:8042",
+
+        "kmeEndpoint": "http://localhost:9000",
+
+        "qkdNodeId": "PUNE_NODE",
+
+        "ipsecGateway": "10.0.0.10",
+
+        "sha256Hash": "ghi789abc123"
+      }
+    ]
+  }
+]

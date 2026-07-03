@@ -1,0 +1,94 @@
+// key_service.proto
+// ─────────────────
+// gRPC interface exposing quantum key material to the external Rust transport layer.
+// Generated stubs: `python -m grpc_tools.protoc -I proto --python_out=api --grpc_python_out=api proto/key_service.proto`
+
+syntax = "proto3";
+
+package qko.v1;
+
+option go_package   = "github.com/example/qko/api/v1";
+option java_package = "com.example.qko.api.v1";
+
+// ── Key material ─────────────────────────────────────────────────────────────
+
+message KeyMaterial {
+    string key_id       = 1;   // UUID
+    bytes  key_data     = 2;   // raw key bytes
+    uint32 size_bits    = 3;
+    string source       = 4;   // "qkd" | "qrng"
+    double jfi_at_issue = 5;   // Jain's Fairness Index at time of issuance
+    map<string, string> metadata = 6;
+}
+
+// ── AcquireKey ────────────────────────────────────────────────────────────────
+
+message AcquireKeyRequest {
+    string router_id    = 1;   // requesting quantum router ID
+    uint32 count        = 2;   // number of keys requested (default 1)
+    uint32 size_bits    = 3;   // desired key size in bits (default 256)
+}
+
+message AcquireKeyResponse {
+    repeated KeyMaterial keys = 1;
+    double jfi               = 2;   // current JFI after allocation
+    string epoch_id          = 3;
+}
+
+// ── PoolStatus ────────────────────────────────────────────────────────────────
+
+message PoolStatusRequest {
+    string kme_id = 1;   // empty = all KMEs
+}
+
+message PoolStatusResponse {
+    message KMEPool {
+        string kme_id      = 1;
+        string sae_pair    = 2;
+        uint32 depth       = 3;
+        double jfi         = 4;
+    }
+    repeated KMEPool pools = 1;
+    double overall_jfi     = 2;
+}
+
+// ── RouterRegistration ────────────────────────────────────────────────────────
+
+message RegisterRouterRequest {
+    string router_id = 1;
+    double weight    = 2;   // priority weight ≥ 0 (default 1.0)
+}
+
+message RegisterRouterResponse {
+    bool   success = 1;
+    string message = 2;
+}
+
+// ── SetDemand ─────────────────────────────────────────────────────────────────
+
+message SetDemandRequest {
+    string router_id      = 1;
+    uint32 keys_per_epoch = 2;
+}
+
+message SetDemandResponse {
+    bool   success = 1;
+}
+
+// ── Service ───────────────────────────────────────────────────────────────────
+
+service QuantumKeyService {
+    // Core key acquisition (called by Rust transport layer)
+    rpc AcquireKeys       (AcquireKeyRequest)      returns (AcquireKeyResponse);
+
+    // Pool introspection
+    rpc GetPoolStatus     (PoolStatusRequest)       returns (PoolStatusResponse);
+
+    // Router lifecycle
+    rpc RegisterRouter    (RegisterRouterRequest)   returns (RegisterRouterResponse);
+    rpc DeregisterRouter  (RegisterRouterRequest)   returns (RegisterRouterResponse);
+    rpc SetRouterDemand   (SetDemandRequest)        returns (SetDemandResponse);
+
+    // Streaming key feed (Rust transport subscribes for continuous delivery)
+    rpc StreamKeys        (AcquireKeyRequest)       returns (stream KeyMaterial);
+}

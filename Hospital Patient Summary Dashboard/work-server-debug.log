@@ -1,0 +1,149 @@
+Mongo URI = mongodb://localhost:27017
+QKD Medical Backend running on http://localhost:3001
+RAW BODY: {"username":"x","password":"y"}
+POST /api/auth/login
+Headers: {
+  'user-agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-IN) WindowsPowerShell/5.1.26100.8655',
+  'content-type': 'application/json',
+  host: '127.0.0.1:3001',
+  'content-length': '31',
+  expect: '100-continue',
+  connection: 'Keep-Alive'
+}
+Body: { username: 'x', password: 'y' }
+Ping: { ok: 1 }
+Server info:
+{
+  host: 'LAPTOP-J23CUKQA',
+  process: 'C:\\Program Files\\MongoDB\\Server\\8.0\\bin\\mongod.exe',
+  version: '8.0.1'
+}
+===== DATABASES =====
+{
+  databases: [
+    { name: 'admin', sizeOnDisk: 40960, empty: false },
+    { name: 'central_server', sizeOnDisk: 516096, empty: false },
+    { name: 'config', sizeOnDisk: 73728, empty: false },
+    { name: 'db', sizeOnDisk: 155648, empty: false },
+    { name: 'health_records', sizeOnDisk: 548864, empty: false },
+    { name: 'hosp_a_db', sizeOnDisk: 65536, empty: false },
+    { name: 'hosp_b_db', sizeOnDisk: 65536, empty: false },
+    { name: 'local', sizeOnDisk: 135168, empty: false },
+    {
+      name: 'quantum_health_records',
+      sizeOnDisk: 114688,
+      empty: false
+    }
+  ],
+  totalSize: 1716224,
+  totalSizeMb: 1,
+  ok: 1
+}
+===== DEFAULT DB =====
+test
+===== CENTRAL SERVER COLLECTIONS =====
+[
+  {
+    name: 'doctors',
+    type: 'collection',
+    options: {},
+    info: {
+      readOnly: false,
+      uuid: new UUID('1d79679c-2f48-4fe6-8be9-111af1c807e1')
+    },
+    idIndex: { v: 2, key: [Object], name: '_id_' }
+  },
+  {
+    name: 'emergency_access_logs',
+    type: 'collection',
+    options: {},
+    info: {
+      readOnly: false,
+      uuid: new UUID('2ce833b6-8e5a-460a-af5e-994a6b53b728')
+    },
+    idIndex: { v: 2, key: [Object], name: '_id_' }
+  },
+  {
+    name: 'sessions',
+    type: 'collection',
+    options: {},
+    info: {
+      readOnly: false,
+      uuid: new UUID('6ebbb8bb-f73c-417f-af9d-2626bb047283')
+    },
+    idIndex: { v: 2, key: [Object], name: '_id_' }
+  },
+  {
+    name: 'patients',
+    type: 'collection',
+    options: {},
+    info: {
+      readOnly: false,
+      uuid: new UUID('78ee2602-2575-45be-9d49-1738b73feb26')
+    },
+    idIndex: { v: 2, key: [Object], name: '_id_' }
+  },
+  {
+    name: 'access_logs',
+    type: 'collection',
+    options: {},
+    info: {
+      readOnly: false,
+      uuid: new UUID('7c9e2ccf-50a3-41a9-9deb-61a0918ea3b1')
+    },
+    idIndex: { v: 2, key: [Object], name: '_id_' }
+  },
+  {
+    name: 'centrail_server_main',
+    type: 'collection',
+    options: {},
+    info: {
+      readOnly: false,
+      uuid: new UUID('9207d5e8-f1b5-4f04-a6bb-c307cfa9e07e')
+    },
+    idIndex: { v: 2, key: [Object], name: '_id_' }
+  },
+  {
+    name: 'qkd_sessions',
+    type: 'collection',
+    options: {},
+    info: {
+      readOnly: false,
+      uuid: new UUID('b60e13b0-f773-4e61-ba68-3454b0897690')
+    },
+    idIndex: { v: 2, key: [Object], name: '_id_' }
+  },
+  {
+    name: 'otp_verifications',
+    type: 'collection',
+    options: {},
+    info: {
+      readOnly: false,
+      uuid: new UUID('c099a318-f424-423f-99ad-7e9d84538a9a')
+    },
+    idIndex: { v: 2, key: [Object], name: '_id_' }
+  },
+  {
+    name: 'data_processed',
+    type: 'collection',
+    options: {},
+    info: {
+      readOnly: false,
+      uuid: new UUID('d2c27629-a848-47cf-a33f-5ee6146db59b')
+    },
+    idIndex: { v: 2, key: [Object], name: '_id_' }
+  }
+]
+Database Name: central_server
+Collections: [
+  'doctors',
+  'emergency_access_logs',
+  'sessions',
+  'patients',
+  'access_logs',
+  'centrail_server_main',
+  'qkd_sessions',
+  'otp_verifications',
+  'data_processed'
+]
+Doctor found: null

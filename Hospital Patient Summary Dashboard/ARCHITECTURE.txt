@@ -1,0 +1,230 @@
+```
+╔══════════════════════════════════════════════════════════════════════════════════╗
+║                    PATIENT DASHBOARD - BACKEND INTEGRATION ARCHITECTURE         ║
+╚══════════════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│  FRONTEND (React + TypeScript)                                                  │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                 │
+│  ┌──────────────────────┐                                                      │
+│  │  App.tsx             │  ← Main application component                        │
+│  │  - Loading states    │  ← Uses DataService for all data                     │
+│  │  - Error handling    │  ← Auto-switches mock/real based on env             │
+│  └──────────┬───────────┘                                                      │
+│             │                                                                   │
+│             ↓                                                                   │
+│  ┌──────────────────────────────────────────────────────────────────────────┐  │
+│  │  DataService (src/services/data.service.ts)                             │  │
+│  │  ┌────────────────┐     Environment Variable Check                      │  │
+│  │  │ if (USE_MOCK)  │ ─────→ VITE_USE_MOCK_DATA=true/false               │  │
+│  │  └───┬────────┬───┘                                                     │  │
+│  │      │        │                                                          │  │
+│  │      ↓        ↓                                                          │  │
+│  │  MockData   RealAPI                                                      │  │
+│  └──────┬────────┬─────────────────────────────────────────────────────────┘  │
+│         │        │                                                             │
+│         │        ↓                                                             │
+│         │   ┌────────────────────────────────────────────────────────────┐    │
+│         │   │  API Service (src/services/api.service.ts)                │    │
+│         │   │  - HTTP client with fetch                                  │    │
+│         │   │  - Error handling & retries                                │    │
+│         │   │  - Request timeout (10s)                                   │    │
+│         │   │  - Type-safe responses                                     │    │
+│         │   └────────────────┬───────────────────────────────────────────┘    │
+│         │                    │                                                 │
+└─────────┼────────────────────┼─────────────────────────────────────────────────┘
+          │                    │
+          │                    │ HTTP Request
+          │                    │ GET /api/v1/patients/MRN-123
+          │                    │
+          │                    ↓
+┌─────────┼────────────────────────────────────────────────────────────────────────┐
+│         │    BACKEND (Python FastAPI)                                           │
+├─────────┼────────────────────────────────────────────────────────────────────────┤
+│         │                                                                        │
+│         │    ┌──────────────────────────────────────────────────────────────┐   │
+│         │    │  backend_example.py                                         │   │
+│         │    │  - CORS middleware                                          │   │
+│         │    │  - Pydantic validation                                      │   │
+│         │    │  - Standardized responses                                   │   │
+│         │    │  - Interactive API docs at /docs                            │   │
+│         │    └────────────────┬───────────────────────────────────────────┘   │
+│         │                     │                                                │
+│         │                     ↓                                                │
+│         │    ┌──────────────────────────────────────────────────────────────┐  │
+│         │    │  Database Layer (database_models.py)                       │  │
+│         │    │  - SQLAlchemy ORM models                                   │  │
+│         │    │  - Type-safe queries                                       │  │
+│         │    │  - Relationship mapping                                    │  │
+│         │    └────────────────┬───────────────────────────────────────────┘  │
+│         │                     │                                               │
+└─────────┼─────────────────────┼───────────────────────────────────────────────┘
+          │                     │
+          │                     │ SQL Query
+          │                     │ SELECT * FROM patients WHERE mrn = ?
+          │                     │
+          │                     ↓
+┌─────────┼─────────────────────────────────────────────────────────────────────────┐
+│         │     DATABASE (PostgreSQL)                                              │
+├─────────┼─────────────────────────────────────────────────────────────────────────┤
+│         │                                                                         │
+│         │     ┌────────────────────────────────────────────────────────────┐     │
+│         │     │  Schema (database_schema.sql)                             │     │
+│         │     │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐   │     │
+│         │     │  │  patients    │  │ demographics │  │  allergies   │   │     │
+│         │     │  │  - mrn (PK)  │  │ - mrn (FK)   │  │  - id (PK)   │   │     │
+│         │     │  │  - name      │  │ - address    │  │  - mrn (FK)  │   │     │
+│         │     │  │  - dob       │  │ - phone      │  │  - substance │   │     │
+│         │     │  │  - gender    │  │ - email      │  │  - severity  │   │     │
+│         │     │  └──────────────┘  └──────────────┘  └──────────────┘   │     │
+│         │     │                                                          │     │
+│         │     │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐   │     │
+│         │     │  │ medications  │  │  problems    │  │   vitals     │   │     │
+│         │     │  │ lab_results  │  │  procedures  │  │ immunizations│   │     │
+│         │     │  └──────────────┘  └──────────────┘  └──────────────┘   │     │
+│         │     │                                                          │     │
+│         │     │  ┌──────────────────────────────────────────────────┐   │     │
+│         │     │  │  Indexes, Triggers, Audit Logs, Security Roles  │   │     │
+│         │     │  └──────────────────────────────────────────────────┘   │     │
+│         │     └────────────────────────────────────────────────────────────┘     │
+│         │                                                                         │
+│         ↓     Response Flow (JSON)                                               │
+│         {                                                                         │
+│           "success": true,                                                        │
+│           "data": {                                                               │
+│             "mrn": "MRN-2024-789456",                                            │
+│             "name": "Johnson, Maria Elena",                                      │
+│             "dob": "1965-03-14",                                                 │
+│             "blood_type": "O+"                                                   │
+│           },                                                                      │
+│           "timestamp": "2026-03-24T10:30:00Z"                                    │
+│         }                                                                         │
+└───────────────────────────────────────────────────────────────────────────────────┘
+
+
+╔══════════════════════════════════════════════════════════════════════════════════╗
+║                           DATA FLOW SEQUENCE                                     ║
+╚══════════════════════════════════════════════════════════════════════════════════╝
+
+1. USER ACTION
+   └→ User opens dashboard
+
+2. FRONTEND (App.tsx)
+   └→ useEffect() calls DataService.getPatient(mrn)
+
+3. DATA SERVICE (data.service.ts)
+   └→ Checks VITE_USE_MOCK_DATA environment variable
+       ├→ If true:  Return MockDataService.getPatient(mrn)  [Development]
+       └→ If false: Call API.Patient.getPatient(mrn)       [Production]
+
+4. API SERVICE (api.service.ts)
+   └→ HTTP GET request to http://localhost:8000/api/v1/patients/{mrn}
+       ├→ Sets headers (Content-Type, Authorization)
+       ├→ Sets timeout (10 seconds)
+       └→ Returns typed response Promise<Patient>
+
+5. BACKEND (backend_example.py)
+   └→ FastAPI endpoint @app.get("/api/v1/patients/{mrn}")
+       ├→ CORS check (allowed origin?)
+       ├→ Pydantic validation
+       ├→ Query database or mock data
+       └→ Return ApiResponse<Patient>
+
+6. DATABASE (PostgreSQL)
+   └→ SELECT * FROM patients WHERE mrn = 'MRN-2024-789456'
+       └→ Returns row via SQLAlchemy ORM
+
+7. RESPONSE FLOW
+   └→ Backend formats response → Frontend receives JSON → DataService transforms
+       → App.tsx updates state → Components re-render with patient data
+
+
+╔══════════════════════════════════════════════════════════════════════════════════╗
+║                         DEVELOPMENT VS PRODUCTION                                ║
+╚══════════════════════════════════════════════════════════════════════════════════╝
+
+┌────────────────────────────────────┬────────────────────────────────────────────┐
+│  DEVELOPMENT MODE                  │  PRODUCTION MODE                           │
+├────────────────────────────────────┼────────────────────────────────────────────┤
+│  .env:                             │  .env:                                     │
+│  VITE_USE_MOCK_DATA=true          │  VITE_USE_MOCK_DATA=false                 │
+│                                    │  VITE_API_BASE_URL=https://api.domain.com │
+│                                    │                                            │
+│  ┌──────────────────────────────┐ │  ┌──────────────────────────────────────┐ │
+│  │ React App                    │ │  │ React App                            │ │
+│  │  ↓                           │ │  │  ↓                                   │ │
+│  │ DataService                  │ │  │ DataService                          │ │
+│  │  ↓                           │ │  │  ↓                                   │ │
+│  │ MockDataService              │ │  │ API Service (HTTP)                   │ │
+│  │  ↓                           │ │  │  ↓                                   │ │
+│  │ Returns hardcoded JSON       │ │  │ FastAPI Backend                      │ │
+│  │  ↓                           │ │  │  ↓                                   │ │
+│  │ UI renders instantly         │ │  │ PostgreSQL Database                  │ │
+│  └──────────────────────────────┘ │  │  ↓                                   │ │
+│                                    │  │ Real patient data                    │ │
+│  ✅ No backend needed              │  └──────────────────────────────────────┘ │
+│  ✅ Fast iteration                 │                                            │
+│  ✅ No database required           │  ✅ Real data                              │
+│                                    │  ✅ Multi-user                             │
+│                                    │  ✅ Persistent storage                     │
+└────────────────────────────────────┴────────────────────────────────────────────┘
+
+
+╔══════════════════════════════════════════════════════════════════════════════════╗
+║                            TYPE SAFETY FLOW                                      ║
+╚══════════════════════════════════════════════════════════════════════════════════╝
+
+Python (Backend)                TypeScript (Frontend)
+┌─────────────────┐            ┌─────────────────────┐
+│ class Patient:  │            │ interface Patient { │
+│   mrn: str      │ ← Maps → │   mrn: string       │
+│   name: str     │            │   name: string      │
+│   dob: str      │            │   dob: string       │
+│   blood_type    │            │   blood_type        │
+└─────────────────┘            └─────────────────────┘
+      ↓ Pydantic                     ↑ TypeScript
+      ↓ Validation                   ↑ Type checking
+      ↓                               ↑
+┌─────────────────┐            ┌─────────────────────┐
+│ PostgreSQL      │            │ React Components    │
+│ blood_type      │            │ patient.blood_type  │
+│ VARCHAR(10)     │            │ (autocomplete)      │
+└─────────────────┘            └─────────────────────┘
+
+✅ Full type safety from database → API → frontend → components
+✅ Automatic field name conversion (snake_case ↔ camelCase)
+✅ IDE autocomplete works everywhere
+✅ Compile-time error checking
+
+
+╔══════════════════════════════════════════════════════════════════════════════════╗
+║                           FILES CREATED                                          ║
+╚══════════════════════════════════════════════════════════════════════════════════╝
+
+Backend:
+  📄 backend_example.py          Complete FastAPI server (486 lines)
+  📄 database_models.py          SQLAlchemy ORM models (389 lines)
+  📄 database_schema.sql         PostgreSQL schema (340 lines)
+
+Frontend:
+  📄 src/types/patient.types.ts  TypeScript interfaces
+  📄 src/services/api.service.ts Production API client
+  📄 src/services/mock-data.service.ts  Development mock data
+  📄 src/services/data.service.ts       Unified data layer
+  📄 src/app/App.tsx             Updated with async loading
+
+Documentation:
+  📄 BACKEND_INTEGRATION.md      Complete guide (751 lines)
+  📄 README_BACKEND.md           Quick start guide
+  📄 INTEGRATION_SUMMARY.md      This summary
+  📄 ARCHITECTURE.txt            This diagram
+
+Configuration:
+  📄 .env                        Environment variables
+  📄 .env.example                Template for deployment
+  📄 quickstart.py               Auto-setup script
+
+
+Total: ~2000 lines of production-ready integration code
+```

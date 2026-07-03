@@ -1,0 +1,41 @@
+{
+  "requestId": "consent-001",
+  "timestamp": "2026-06-22T15:30:00Z",
+  "consent": {
+    "purpose": {
+      "text": "Care Management",
+      "code": "CAREMGMT",
+      "refUri": "https://abdm.gov.in"
+    },
+    "patient": {
+      "id": "123456789"
+    },
+    "hiu": {
+      "id": "test-hiu"
+    },
+    "requester": {
+      "name": "Test Requester",
+      "identifier": {
+        "type": "REGNO",
+        "value": "12345",
+        "system": "https://abdm.gov.in"
+      }
+    },
+    "hiTypes": [
+      "Prescription"
+    ],
+    "permission": {
+      "accessMode": "VIEW",
+      "dateRange": {
+        "from": "2025-01-01T00:00:00Z",
+        "to": "2026-06-22T00:00:00Z"
+      },
+      "dataEraseAt": "2027-01-01T00:00:00Z",
+      "frequency": {
+        "unit": "DAY",
+        "value": 1,
+        "repeats": 1
+      }
+    }
+  }
+}
