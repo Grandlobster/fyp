@@ -270,7 +270,7 @@ This project was submitted to **Savitribai Phule Pune University** in partial fu
 Dr. Manju Pawar, Department of Artificial Intelligence and Data Science
 
 **Zeal Education Society's Zeal College of Engineering and Research**, Narhe, Pune – 411041
-<img width="300" height="150" alt="image" align="center" src="https://github.com/user-attachments/assets/5c293e30-4a99-4d84-b373-3495f5c2127b" />
+<img width="300" height="150" alt="image" src="https://github.com/user-attachments/assets/5c293e30-4a99-4d84-b373-3495f5c2127b" />
 
 ---
 
