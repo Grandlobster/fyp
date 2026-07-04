@@ -2,17 +2,6 @@
 
 #  Quantum-Encrypted ABDM-Integrated Hospital Data Management System
 
-**Post-quantum cryptography · Simulated QKD · ABDM/ABHA interoperability**
-
-![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)
-![Rust](https://img.shields.io/badge/Rust-Transport_Layer-000000?style=flat-square&logo=rust&logoColor=white)
-![React](https://img.shields.io/badge/React-Next.js-20232A?style=flat-square&logo=react&logoColor=61DAFB)
-![MySQL](https://img.shields.io/badge/MySQL-Audit_Store-4479A1?style=flat-square&logo=mysql&logoColor=white)
-![ML--KEM](https://img.shields.io/badge/ML--KEM--768-FIPS_203-8A2BE2?style=flat-square)
-![ML--DSA](https://img.shields.io/badge/ML--DSA--65-FIPS_204-8A2BE2?style=flat-square)
-![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
-
-</div>
 
 ---
 
@@ -94,7 +83,7 @@ KME requires a QRNG API key for fallback key generation when the KME REST endpoi
 | Windows (PowerShell) | `$env:QRNG_API_KEY="your_api_key_here"` |
 
 > If `QRNG_API_KEY` is unset, KME cannot fall back to QRNG when the REST endpoint is down. Keep the key in a local, gitignored `.env` file — never commit it.
-
+### We have used Quantum Blockchain's QRNG API
 **Run the orchestrator**
 ```bash
 KME_BASE_URL=https://kme.example.com \
@@ -281,7 +270,7 @@ This project was submitted to **Savitribai Phule Pune University** in partial fu
 Dr. Manju Pawar, Department of Artificial Intelligence and Data Science
 
 **Zeal Education Society's Zeal College of Engineering and Research**, Narhe, Pune – 411041
-<img width="600" height="300" alt="image" src="https://github.com/user-attachments/assets/5c293e30-4a99-4d84-b373-3495f5c2127b" />
+<img width="300" height="150" alt="image" align="center" src="https://github.com/user-attachments/assets/5c293e30-4a99-4d84-b373-3495f5c2127b" />
 
 ---
 
